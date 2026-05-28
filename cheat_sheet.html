@@ -6,17 +6,17 @@
   <title>CCA-F Cheat Sheet</title>
   <style>
     :root {
-      --bg: #0f1117;
-      --surface: #1a1d2e;
-      --surface2: #252840;
-      --accent: #7c6af7;
-      --accent2: #56cfb2;
-      --accent3: #f7a26a;
-      --accent4: #f76a6a;
-      --text: #e2e4f0;
-      --muted: #8b8fa8;
-      --border: #2e3250;
-      --code-bg: #0d0f1a;
+      --bg: #f5f6fa;
+      --surface: #ffffff;
+      --surface2: #eef0f8;
+      --accent: #6b5ce7;
+      --accent2: #00a896;
+      --accent3: #f4845f;
+      --accent4: #e05c5c;
+      --text: #2d2f45;
+      --muted: #7a7d9a;
+      --border: #dde0ef;
+      --code-bg: #eef0f8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -27,7 +27,7 @@
       line-height: 1.5;
     }
     .header {
-      background: linear-gradient(135deg, #1a1d2e 0%, #252840 100%);
+      background: linear-gradient(135deg, #6b5ce7 0%, #3a8fd1 100%);
       border-bottom: 1px solid var(--border);
       padding: 28px 40px 24px;
       display: flex;
@@ -37,7 +37,7 @@
     .header h1 {
       font-size: 24px;
       font-weight: 700;
-      color: #fff;
+      color: #ffffff;
       letter-spacing: -0.3px;
     }
     .header span {
@@ -92,14 +92,14 @@
       flex-shrink: 0;
     }
     .module-num.d1 { background: #7c6af7; }
-    .module-num.d2 { background: #56cfb2; color: #0f1117; }
-    .module-num.d3 { background: #f7a26a; color: #0f1117; }
+    .module-num.d2 { background: #00a896; color: #fff; }
+    .module-num.d3 { background: #f4845f; color: #fff; }
     .module-num.d4 { background: #f76a6a; }
-    .module-num.d5 { background: #6ab4f7; color: #0f1117; }
+    .module-num.d5 { background: #3a8fd1; color: #fff; }
     .module-title {
       font-size: 13px;
       font-weight: 600;
-      color: #fff;
+      color: var(--text);
     }
     .domain-tag {
       margin-left: auto;
@@ -135,7 +135,7 @@
       font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
       font-size: 10.5px;
       background: var(--code-bg);
-      color: #a8c0ff;
+      color: #5a4fcf;
       padding: 1px 5px;
       border-radius: 3px;
     }
@@ -147,7 +147,7 @@
       margin: 6px 0;
       overflow-x: auto;
       font-size: 10.5px;
-      color: #a8c0ff;
+      color: #5a4fcf;
       line-height: 1.6;
       font-family: 'JetBrains Mono', 'Fira Code', monospace;
     }
@@ -180,11 +180,11 @@
       border-radius: 10px;
       margin: 1px 2px;
     }
-    .pill-purple { background: rgba(124,106,247,0.2); color: #9d8ffa; }
-    .pill-green  { background: rgba(86,207,178,0.2); color: #56cfb2; }
-    .pill-orange { background: rgba(247,162,106,0.2); color: #f7a26a; }
-    .pill-red    { background: rgba(247,106,106,0.2); color: #f76a6a; }
-    .pill-blue   { background: rgba(106,180,247,0.2); color: #6ab4f7; }
+    .pill-purple { background: rgba(107,92,231,0.12); color: #5a4fcf; }
+    .pill-green  { background: rgba(0,168,150,0.12); color: #00877a; }
+    .pill-orange { background: rgba(244,132,95,0.15); color: #c95f35; }
+    .pill-red    { background: rgba(224,92,92,0.12); color: #c03a3a; }
+    .pill-blue   { background: rgba(58,143,209,0.12); color: #2470b0; }
     .section-label {
       font-size: 9px;
       font-weight: 700;
@@ -211,10 +211,10 @@
       letter-spacing: 0.5px;
       margin-bottom: 5px;
     }
-    .vs-box .vs-title.green { color: var(--accent2); }
-    .vs-box .vs-title.red   { color: var(--accent4); }
-    .vs-box .vs-title.purple { color: var(--accent); }
-    .vs-box .vs-title.orange { color: var(--accent3); }
+    .vs-box .vs-title.green { color: #00877a; }
+    .vs-box .vs-title.red   { color: #c03a3a; }
+    .vs-box .vs-title.purple { color: #5a4fcf; }
+    .vs-box .vs-title.orange { color: #c95f35; }
     .vs-box ul { padding-left: 14px; }
     .vs-box li { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
     .vs-box li strong { color: var(--text); }
@@ -394,13 +394,13 @@
     </div>
 
     <div class="spectrum">
-      <div class="spectrum-item" style="background:rgba(124,106,247,0.15); color:#9d8ffa;">Prompt</div>
+      <div class="spectrum-item" style="background:rgba(107,92,231,0.12); color:#5a4fcf;">Prompt</div>
       <div class="arrow">→</div>
-      <div class="spectrum-item" style="background:rgba(247,162,106,0.15); color:#f7a26a;">PreToolUse</div>
+      <div class="spectrum-item" style="background:rgba(244,132,95,0.15); color:#c95f35;">PreToolUse</div>
       <div class="arrow">→</div>
-      <div class="spectrum-item" style="background:rgba(247,106,106,0.15); color:#f76a6a;">PostToolUse</div>
+      <div class="spectrum-item" style="background:rgba(224,92,92,0.12); color:#c03a3a;">PostToolUse</div>
       <div class="arrow">→</div>
-      <div class="spectrum-item" style="background:rgba(86,207,178,0.15); color:#56cfb2;">Dedicated Service</div>
+      <div class="spectrum-item" style="background:rgba(0,168,150,0.12); color:#00877a;">Dedicated Service</div>
     </div>
 
     <table>
@@ -931,7 +931,7 @@
   <!-- BONUS: Key architecture patterns -->
   <div class="module" id="bonus" style="grid-column: span 3; border-top: 2px solid var(--accent);">
     <div class="module-header">
-      <span class="module-num d1" style="background: linear-gradient(135deg, #7c6af7, #56cfb2); color: #fff;">★</span>
+      <span class="module-num d1" style="background: linear-gradient(135deg, #6b5ce7, #3a8fd1); color: #fff;">★</span>
       <span class="module-title">Key Architecture Patterns &amp; Exam Traps</span>
     </div>
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
