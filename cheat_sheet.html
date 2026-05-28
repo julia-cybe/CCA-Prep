@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CCA-F Cheat Sheet</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d2e;
+      --surface2: #252840;
+      --accent: #7c6af7;
+      --accent2: #56cfb2;
+      --accent3: #f7a26a;
+      --accent4: #f76a6a;
+      --text: #e2e4f0;
+      --muted: #8b8fa8;
+      --border: #2e3250;
+      --code-bg: #0d0f1a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .header {
+      background: linear-gradient(135deg, #1a1d2e 0%, #252840 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 40px 24px;
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.3px;
+    }
+    .header span {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .toc {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 40px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+    }
+    .toc a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: color 0.15s;
+    }
+    .toc a:hover { color: var(--accent); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      padding: 1px;
+    }
+    .module {
+      background: var(--bg);
+      padding: 20px 22px;
+    }
+    .module-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .module-num {
+      background: var(--accent);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+    .module-num.d1 { background: #7c6af7; }
+    .module-num.d2 { background: #56cfb2; color: #0f1117; }
+    .module-num.d3 { background: #f7a26a; color: #0f1117; }
+    .module-num.d4 { background: #f76a6a; }
+    .module-num.d5 { background: #6ab4f7; color: #0f1117; }
+    .module-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .domain-tag {
+      margin-left: auto;
+      font-size: 9px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .rule {
+      margin-bottom: 8px;
+      padding: 7px 10px;
+      background: var(--surface);
+      border-radius: 6px;
+      border-left: 3px solid var(--border);
+    }
+    .rule.key { border-left-color: var(--accent); }
+    .rule.warn { border-left-color: var(--accent4); }
+    .rule.tip { border-left-color: var(--accent2); }
+    .rule.info { border-left-color: var(--accent3); }
+    .rule-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+    .rule-body {
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .rule-body strong { color: var(--text); font-weight: 600; }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 10.5px;
+      background: var(--code-bg);
+      color: #a8c0ff;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      margin: 6px 0;
+      overflow-x: auto;
+      font-size: 10.5px;
+      color: #a8c0ff;
+      line-height: 1.6;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 6px 0;
+      font-size: 11px;
+    }
+    th {
+      background: var(--surface2);
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 9.5px;
+      letter-spacing: 0.5px;
+      padding: 5px 8px;
+      text-align: left;
+    }
+    td {
+      padding: 5px 8px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    .pill {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: 10px;
+      margin: 1px 2px;
+    }
+    .pill-purple { background: rgba(124,106,247,0.2); color: #9d8ffa; }
+    .pill-green  { background: rgba(86,207,178,0.2); color: #56cfb2; }
+    .pill-orange { background: rgba(247,162,106,0.2); color: #f7a26a; }
+    .pill-red    { background: rgba(247,106,106,0.2); color: #f76a6a; }
+    .pill-blue   { background: rgba(106,180,247,0.2); color: #6ab4f7; }
+    .section-label {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin: 10px 0 6px;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .vs-box {
+      background: var(--surface);
+      border-radius: 6px;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+    }
+    .vs-box .vs-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 5px;
+    }
+    .vs-box .vs-title.green { color: var(--accent2); }
+    .vs-box .vs-title.red   { color: var(--accent4); }
+    .vs-box .vs-title.purple { color: var(--accent); }
+    .vs-box .vs-title.orange { color: var(--accent3); }
+    .vs-box ul { padding-left: 14px; }
+    .vs-box li { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+    .vs-box li strong { color: var(--text); }
+    .spectrum {
+      display: flex;
+      gap: 4px;
+      margin: 6px 0;
+      align-items: center;
+    }
+    .spectrum-item {
+      flex: 1;
+      text-align: center;
+      padding: 6px 4px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .arrow { color: var(--muted); font-size: 14px; }
+    .wide { grid-column: span 1; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>CCA-F Cheat Sheet</h1>
+  <span>17 Modules · All 5 Domains</span>
+</div>
+
+<div class="toc">
+  <a href="#m1">M1 Tool Use</a>
+  <a href="#m2">M2 Tool Choice</a>
+  <a href="#m3">M3 Multi-Agent</a>
+  <a href="#m4">M4 Enforcement</a>
+  <a href="#m5">M5 Decomposition</a>
+  <a href="#m6">M6 Tool Descriptions</a>
+  <a href="#m7">M7 Error Handling</a>
+  <a href="#m8">M8 MCP</a>
+  <a href="#m9">M9 CLAUDE.md</a>
+  <a href="#m10">M10 Slash Commands</a>
+  <a href="#m11">M11 CI/CD</a>
+  <a href="#m12">M12 Prompt Engineering</a>
+  <a href="#m13">M13 JSON Output</a>
+  <a href="#m14">M14 Batch API</a>
+  <a href="#m15">M15 Context Preservation</a>
+  <a href="#m16">M16 Escalation</a>
+  <a href="#m17">M17 Error Propagation</a>
+</div>
+
+<div class="grid">
+
+  <!-- MODULE 1 -->
+  <div class="module" id="m1">
+    <div class="module-header">
+      <span class="module-num d1">M1</span>
+      <span class="module-title">Tool Use &amp; Agentic Loop</span>
+      <span class="domain-tag">Domain 1</span>
+    </div>
+
+    <div class="rule key">
+      <div class="rule-title">Message Flow Rule</div>
+      <div class="rule-body">After a tool call, you MUST append <strong>both</strong>: the assistant's tool_use block + the tool_result as a user message — or the request fails.</div>
+    </div>
+
+    <pre>messages = [
+  {"role": "user",      "content": "What is 347 * 82?"},
+  {"role": "assistant", "content": [ToolUseBlock(...)]},  ← assistant
+  {"role": "user",      "content": [{"type": "tool_result",
+                                     "tool_use_id": "abc",
+                                     "content": "28454"}]}  ← user
+]</pre>
+
+    <div class="rule info">
+      <div class="rule-title">stop_reason values</div>
+      <div class="rule-body">
+        <span class="pill pill-purple">end_turn</span> normal finish &nbsp;
+        <span class="pill pill-orange">tool_use</span> tool needed &nbsp;
+        <span class="pill pill-red">max_tokens</span> surface error, don't silently loop &nbsp;
+        <span class="pill pill-blue">stop_sequence</span> custom delimiter hit
+      </div>
+    </div>
+
+    <div class="rule warn">
+      <div class="rule-title">Statefulness</div>
+      <div class="rule-body"><strong>In-session:</strong> stateful via the <code>messages</code> list. <strong>Cross-session:</strong> stateless — persist to a DB to survive restarts.</div>
+    </div>
+
+    <div class="rule tip">
+      <div class="rule-title">Tool selection mechanism</div>
+      <div class="rule-body">Tool descriptions are the primary routing mechanism. Claude matches the user request semantically to the description.</div>
+    </div>
+  </div>
+
+  <!-- MODULE 2 -->
+  <div class="module" id="m2">
+    <div class="module-header">
+      <span class="module-num d1">M2</span>
+      <span class="module-title">Tool Choice &amp; Parallel Calls</span>
+      <span class="domain-tag">Domain 1</span>
+    </div>
+
+    <table>
+      <tr><th>tool_choice</th><th>Behavior</th></tr>
+      <tr><td><code>"auto"</code></td><td>Default — Claude decides</td></tr>
+      <tr><td><code>"any"</code></td><td>Force a tool call (any tool)</td></tr>
+      <tr><td><code>"none"</code></td><td>Prohibit all tool calls</td></tr>
+      <tr><td><code>"tool"</code> + <code>name</code></td><td>Force a specific tool</td></tr>
+    </table>
+
+    <div class="rule warn">
+      <div class="rule-title">Tool order matters</div>
+      <div class="rule-body">With <code>"any"</code> forced on a non-tool question, Claude picks the <strong>first tool in the list</strong>. Order your tools deliberately.</div>
+    </div>
+
+    <div class="rule key">
+      <div class="rule-title">Parallel tool calls = 1 API round-trip</div>
+      <div class="rule-body">3 parallel tools → 1 API call (not 3). Massive latency win. Every <code>tool_use</code> block must have a matching <code>tool_result</code> in the next message — even if it's an error.</div>
+    </div>
+
+    <pre>tool_results.append({
+  "type": "tool_result",
+  "tool_use_id": block.id,
+  "content": result_or_error  # NEVER skip
+})</pre>
+
+    <div class="rule info">
+      <div class="rule-title">When to use "none"</div>
+      <div class="rule-body">No validated/safe tools available, or for sensitive data operations where you want to prevent data sharing with external tools.</div>
+    </div>
+  </div>
+
+  <!-- MODULE 3 -->
+  <div class="module" id="m3">
+    <div class="module-header">
+      <span class="module-num d1">M3</span>
+      <span class="module-title">Multi-Agent Systems</span>
+      <span class="domain-tag">Domain 1</span>
+    </div>
+
+    <div class="rule key">
+      <div class="rule-title">Hub-and-Spoke Architecture</div>
+      <div class="rule-body">Subagents do <strong>NOT</strong> automatically inherit coordinator context. Every piece of info a subagent needs must be explicitly passed. Subagents never talk to each other directly.</div>
+    </div>
+
+    <div class="section-label">Coordinator responsibilities</div>
+    <div class="rule">
+      <div class="rule-body">Receive goal · Decompose tasks · Inject context per subagent · Spawn (serial or parallel) · Aggregate results · Handle errors · Return final answer</div>
+    </div>
+
+    <div class="section-label">Error handling pattern</div>
+    <div class="rule warn">
+      <div class="rule-title">Anti-patterns</div>
+      <div class="rule-body"><span class="pill pill-red">Silent suppression</span> hide failure, return partial as complete &nbsp;&nbsp; <span class="pill pill-red">Hard termination</span> abort all work if one subagent fails</div>
+    </div>
+    <div class="rule tip">
+      <div class="rule-title">Correct: Graceful degradation</div>
+      <div class="rule-body">Classify: <strong>transient</strong> → retry with backoff · <strong>permanent</strong> → skip + report. Return successful results + clear failure attribution.</div>
+    </div>
+
+    <div class="two-col" style="margin-top:8px;">
+      <div class="vs-box">
+        <div class="vs-title purple">Parallel Tool Calls</div>
+        <ul><li>1 Claude instance</li><li>1 API round-trip</li><li>Best for simple, stateless tasks</li></ul>
+      </div>
+      <div class="vs-box">
+        <div class="vs-title green">Subagents</div>
+        <ul><li>Multiple instances</li><li>Multi-turn reasoning per agent</li><li>Fault isolation</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 4 -->
+  <div class="module" id="m4">
+    <div class="module-header">
+      <span class="module-num d1">M4</span>
+      <span class="module-title">Programmatic vs. Prompt Enforcement</span>
+      <span class="domain-tag">Domain 1</span>
+    </div>
+
+    <div class="spectrum">
+      <div class="spectrum-item" style="background:rgba(124,106,247,0.15); color:#9d8ffa;">Prompt</div>
+      <div class="arrow">→</div>
+      <div class="spectrum-item" style="background:rgba(247,162,106,0.15); color:#f7a26a;">PreToolUse</div>
+      <div class="arrow">→</div>
+      <div class="spectrum-item" style="background:rgba(247,106,106,0.15); color:#f76a6a;">PostToolUse</div>
+      <div class="arrow">→</div>
+      <div class="spectrum-item" style="background:rgba(86,207,178,0.15); color:#56cfb2;">Dedicated Service</div>
+    </div>
+
+    <table>
+      <tr><th>Risk Level</th><th>Approach</th></tr>
+      <tr><td>Low</td><td>Prompt is fine</td></tr>
+      <tr><td>Medium</td><td>PreToolUse helps</td></tr>
+      <tr><td>High</td><td>PreToolUse required</td></tr>
+      <tr><td>Compliance</td><td>PostToolUse required</td></tr>
+      <tr><td>Extreme</td><td>Dedicated service (validation built into tool)</td></tr>
+    </table>
+
+    <div class="two-col" style="margin-top:8px;">
+      <div class="vs-box">
+        <div class="vs-title orange">PreToolUse</div>
+        <ul><li>Fires <strong>before</strong> execution</li><li>Blocks invalid states</li><li>No token waste</li><li>e.g. refund > $500 → human approval</li></ul>
+      </div>
+      <div class="vs-box">
+        <div class="vs-title green">PostToolUse</div>
+        <ul><li>Fires <strong>after</strong> execution</li><li>Audit / log / alert</li><li>Cannot prevent side effects</li><li>e.g. legal audit trail</li></ul>
+      </div>
+    </div>
+
+    <div class="rule warn" style="margin-top:8px;">
+      <div class="rule-title">Why prompt-only enforcement fails</div>
+      <div class="rule-body">No hard guarantee at scale. Fails when: instruction conflicts with user request, is buried in long context (attention degradation), or model is in hallucination mode.</div>
+    </div>
+  </div>
+
+  <!-- MODULE 5 -->
+  <div class="module" id="m5">
+    <div class="module-header">
+      <span class="module-num d1">M5</span>
+      <span class="module-title">Task Decomposition &amp; Context</span>
+      <span class="domain-tag">Domain 1</span>
+    </div>
+
+    <div class="rule key">
+      <div class="rule-title">Two-pass approach</div>
+      <div class="rule-body"><strong>Pass 1:</strong> Analyze each section independently (focused attention). <strong>Pass 2:</strong> Consolidate summaries into final report. Trades more API calls for significantly better quality.</div>
+    </div>
+
+    <table>
+      <tr><th>Command</th><th>When to use</th></tr>
+      <tr><td><code>--resume &lt;id&gt;</code></td><td>Continue in same direction</td></tr>
+      <tr><td><code>fork_session &lt;id&gt;</code></td><td>Explore alternative paths without losing original</td></tr>
+      <tr><td>Summary injection</td><td>Start fresh with compressed prior context</td></tr>
+    </table>
+
+    <div class="rule info">
+      <div class="rule-title">Summary injection must include</div>
+      <div class="rule-body">Prior goals · Key decisions made · Open questions · Your role · Current goal · Constraints</div>
+    </div>
+
+    <div class="two-col" style="margin-top:6px;">
+      <div class="vs-box">
+        <div class="vs-title purple">Fixed Sequential</div>
+        <ul><li>Planned upfront steps</li><li>Predictable output</li><li>Token-efficient</li><li>Use for product integrations</li></ul>
+      </div>
+      <div class="vs-box">
+        <div class="vs-title orange">Dynamic Adaptive</div>
+        <ul><li>Agent decides next step</li><li>Non-deterministic</li><li>Risk: unbounded cost, hard to debug</li><li>Use for exploration</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 6 -->
+  <div class="module" id="m6">
+    <div class="module-header">
+      <span class="module-num d4">M6</span>
+      <span class="module-title">Tool Descriptions</span>
+      <span class="domain-tag">Domain 4</span>
+    </div>
+
+    <div class="rule key">
+      <div class="rule-title">4 required elements in every tool description</div>
+      <div class="rule-body">
+        1. What is the purpose of the tool<br>
+        2. When to use it<br>
+        3. Required input formats<br>
+        4. <strong>When NOT to use it</strong> (most important for routing)
+      </div>
+    </div>
+
+    <div class="rule warn">
+      <div class="rule-title">≥ 10 tools → reliability degrades</div>
+      <div class="rule-body">Likely due to attention dilution. Split into focused toolsets if approaching this limit.</div>
+    </div>
+
+    <div class="rule">
+      <div class="rule-title">Don't use few-shot for routing</div>
+      <div class="rule-body">Few-shot teaches <em>instances</em>, not <em>boundaries</em>. Edge cases are still guessed. Fix misrouting by enhancing descriptions (especially "when NOT to use").</div>
+    </div>
+
+    <div class="rule warn">
+      <div class="rule-title">Don't add a separate routing classifier</div>
+      <div class="rule-body">Descriptions already ARE the routing logic. A separate classifier is redundant, breaks on every tool rename/add, and reduces flexibility.</div>
+    </div>
+  </div>
+
+  <!-- MODULE 7 -->
+  <div class="module" id="m7">
+    <div class="module-header">
+      <span class="module-num d4">M7</span>
+      <span class="module-title">Tool Error Handling</span>
+      <span class="domain-tag">Domain 4</span>
+    </div>
+
+    <div class="rule key">
+      <div class="rule-title">Tools must ALWAYS return structured responses</div>
+      <div class="rule-body">Never raise an exception. Always return a structured object — even on failure.</div>
+    </div>
+
+    <table>
+      <tr><th>Error Type</th><th>Retryable?</th><th>Action</th></tr>
+      <tr><td><span class="pill pill-blue">transient</span></td><td>Yes</td><td>Retry with exponential backoff</td></tr>
+      <tr><td><span class="pill pill-orange">validation</span></td><td>Once</td><td>Fix input, retry once</td></tr>
+      <tr><td><span class="pill pill-red">business</span></td><td>No</td><td>Escalate to human</td></tr>
+      <tr><td><span class="pill pill-red">permission</span></td><td>No</td><td>Escalate, do not retry</td></tr>
+    </table>
+
+    <div class="rule info">
+      <div class="rule-title">Required fields in structured error response</div>
+      <div class="rule-body"><code>error_type</code> · <code>message</code> · <code>attempts</code> (what was tried) · <code>partial_data</code> (if partially succeeded) · <code>alternatives</code> (next steps)</div>
+    </div>
+
+    <div class="two-col" style="margin-top:6px;">
+      <div class="vs-box">
+        <div class="vs-title red">Silent Suppression</div>
+        <ul><li>Returns success despite failure</li><li>Model proceeds on bad data</li><li>User gets misleading result</li></ul>
+      </div>
+      <div class="vs-box">
+        <div class="vs-title red">Hard Termination</div>
+        <ul><li>Aborts entire workflow on 1 error</li><li>Discards partial successes</li><li>Avoidable value loss</li></ul>
+      </div>
+    </div>
+
+    <div class="rule tip" style="margin-top:6px;">
+      <div class="rule-body">Empty list (no results found) = <strong>success: true</strong> with an informative message, NOT an error.</div>
+    </div>
+  </div>
+
+  <!-- MODULE 8 -->
+  <div class="module" id="m8">
+    <div class="module-header">
+      <span class="module-num d4">M8</span>
+      <span class="module-title">MCP Tools</span>
+      <span class="domain-tag">Domain 4</span>
+    </div>
+
+    <div class="two-col">
+      <div class="vs-box">
+        <div class="vs-title purple">Resources</div>
+        <ul><li><strong>Read-only</strong></li><li>Retrieve information</li><li>e.g. read last 10 DB entries</li></ul>
+      </div>
+      <div class="vs-box">
+        <div class="vs-title orange">Tools</div>
+        <ul><li><strong>Write access</strong></li><li>Modify objects</li><li>e.g. commit file, open MR</li></ul>
+      </div>
+    </div>
+
+    <table style="margin-top:8px;">
+      <tr><th>Config scope</th><th>Location</th><th>Version-controlled?</th></tr>
+      <tr><td>User-level</td><td><code>~/.claude.json</code></td><td>No</td></tr>
+      <tr><td>Project-level</td><td><code>root/mcp.json</code></td><td><strong>Yes</strong></td></tr>
+    </table>
+
+    <div class="rule warn" style="margin-top:8px;">
+      <div class="rule-title">Never hardcode API keys in .mcp.json</div>
+      <div class="rule-body">Use ENV variables. If the config is committed, hardcoded secrets become a security breach.</div>
+    </div>
+
+    <div class="rule info">
+      <div class="rule-title">Build custom vs. use community MCP</div>
+      <div class="rule-body">Build custom when: specific security requirements, internal company data, or auth limitations of public MCPs are unacceptable.</div>
+    </div>
+
+    <div class="rule tip">
+      <div class="rule-title">3 separate MCPs &gt; 1 orchestrator MCP</div>
+      <div class="rule-body">For distinct systems (Postgres, Jira, CRM), deploy 3 separate MCP servers — better tool discovery and availability.</div>
+    </div>
+  </div>
+
+  <!-- MODULE 9 -->
+  <div class="module" id="m9">
+    <div class="module-header">
+      <span class="module-num d2">M9</span>
+      <span class="module-title">CLAUDE.md Hierarchy</span>
+      <span class="domain-tag">Domain 2</span>
+    </div>
+
+    <table>
+      <tr><th>Scope</th><th>Location</th><th>Shared?</th><th>Active when</th></tr>
+      <tr><td>User-level</td><td><code>~/.claude/CLAUDE.md</code></td><td>No</td><td>Always</td></tr>
+      <tr><td>Project-level</td><td><code>root/CLAUDE.md</code></td><td>Yes</td><td>In root folder</td></tr>
+      <tr><td>Directory-level</td><td><code>subdir/CLAUDE.md</code></td><td>Yes</td><td>In that subdir</td></tr>
+      <tr><td>Path-specific</td><td>Glob pattern</td><td>Yes</td><td>When glob matches</td></tr>
+      <tr><td>Imported</td><td><code>@import .claude/rules/x.md</code></td><td>Yes</td><td>When parent CLAUDE.md is active</td></tr>
+    </table>
+
+    <div class="rule key" style="margin-top:8px;">
+      <div class="rule-title">Placement rules</div>
+      <div class="rule-body">
+        <strong>Personal preference</strong> (e.g. "address me as Julia") → <code>~/.claude/CLAUDE.md</code><br>
+        <strong>Team coding standards</strong> (e.g. "always use pytest") → imported rules file via <code>@import</code><br>
+        <strong>File-type-specific rules</strong> (e.g. 50 lines of Terraform rules) → glob pattern, not directory CLAUDE.md<br>
+        <strong>Always-active context</strong> (e.g. "use 4-space indentation") → CLAUDE.md, not a skill
+      </div>
+    </div>
+
+    <div class="rule warn">
+      <div class="rule-title">If Claude ignores team standards</div>
+      <div class="rule-body">Most likely cause: rules are in user-level config instead of project-level, or a directory-level CLAUDE.md is overriding them.</div>
+    </div>
+  </div>
+
+  <!-- MODULE 10 -->
+  <div class="module" id="m10">
+    <div class="module-header">
+      <span class="module-num d2">M10</span>
+      <span class="module-title">Slash Commands &amp; Skills</span>
+      <span class="domain-tag">Domain 2</span>
+    </div>
+
+    <table>
+      <tr><th>Type</th><th>Location</th><th>Shared?</th><th>Frontmatter?</th></tr>
+      <tr><td>Slash command</td><td><code>.claude/commands/</code></td><td>Yes</td><td>No</td></tr>
+      <tr><td>Slash command</td><td><code>~/.claude/commands/</code></td><td>No</td><td>No</td></tr>
+      <tr><td>Skill</td><td><code>.claude/commands/</code></td><td>Yes</td><td><strong>Yes</strong></td></tr>
+      <tr><td>Skill</td><td><code>~/.claude/commands/</code></td><td>No</td><td><strong>Yes</strong></td></tr>
+    </table>
+
+    <div class="rule info" style="margin-top:8px;">
+      <div class="rule-title">Skill frontmatter fields</div>
+      <div class="rule-body">
+        <code>context: fork</code> — spawn isolated subagent, keep main context clean<br>
+        <code>allowed-tools</code> — whitelist of tools the skill may use<br>
+        <code>argument-hint</code> — UI hint for user (e.g. <code>&lt;pr-number&gt;</code>)<br>
+        <code>$ARGUMENTS</code> — where the user's input is injected into the prompt
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:6px;">
+      <div class="vs-box">
+        <div class="vs-title purple">Slash Command</div>
+        <ul><li>No frontmatter config</li><li>No tool whitelisting</li><li>No context isolation</li></ul>
+      </div>
+      <div class="vs-box">
+        <div class="vs-title green">Skill</div>
+        <ul><li>Frontmatter config</li><li>Can fork context</li><li>Tool whitelisting</li></ul>
+      </div>
+    </div>
+
+    <div class="rule tip" style="margin-top:6px;">
+      <div class="rule-body">To share a personal command with the team: move it to <code>/.claude/commands/</code> in the project root.</div>
+    </div>
+  </div>
+
+  <!-- MODULE 11 -->
+  <div class="module" id="m11">
+    <div class="module-header">
+      <span class="module-num d2">M11</span>
+      <span class="module-title">CI/CD Integration</span>
+      <span class="domain-tag">Domain 2</span>
+    </div>
+
+    <table>
+      <tr><th>Flag / Mode</th><th>Purpose</th><th>CI-safe?</th></tr>
+      <tr><td><code>-p</code> / <code>--print</code></td><td>Non-interactive, exits cleanly</td><td><span class="pill pill-green">Yes — required</span></td></tr>
+      <tr><td><code>--output-format json</code></td><td>Machine-parseable output</td><td><span class="pill pill-green">Yes — recommended</span></td></tr>
+      <tr><td><code>--json-schema</code></td><td>Enforce strict output structure</td><td><span class="pill pill-green">Yes</span></td></tr>
+      <tr><td>Plan Mode</td><td>Show plan, wait for approval</td><td><span class="pill pill-red">No — waits for input</span></td></tr>
+    </table>
+
+    <div class="rule key" style="margin-top:8px;">
+      <div class="rule-title">Why independent Claude review catches more</div>
+      <div class="rule-body">Self-review is anchored to the mental model built during implementation — it misses the same blind spots. An independent instance has no prior bias.</div>
+    </div>
+
+    <div class="rule info">
+      <div class="rule-title">Use Plan Mode when</div>
+      <div class="rule-body">Action is irreversible (delete, force-push, drop table) · Scope is large · Compliance sign-off required · Task is ambiguous</div>
+    </div>
+
+    <div class="rule tip">
+      <div class="rule-title">Standards in CLAUDE.md, not CI YAML</div>
+      <div class="rule-body">CLAUDE.md is auto-loaded by every Claude instance — local dev AND CI — so the same rules apply everywhere.</div>
+    </div>
+  </div>
+
+  <!-- MODULE 12 -->
+  <div class="module" id="m12">
+    <div class="module-header">
+      <span class="module-num d3">M12</span>
+      <span class="module-title">Prompt Engineering &amp; Few-Shot</span>
+      <span class="domain-tag">Domain 3</span>
+    </div>
+
+    <div class="rule key">
+      <div class="rule-title">Good instructions are specific and categorical</div>
+      <div class="rule-body">Vague: <em>"only flag high-confidence issues"</em> — undefined, inconsistent. Better: <em>"flag if X AND Y, skip if Z"</em> — categorical, testable.</div>
+    </div>
+
+    <div class="rule info">
+      <div class="rule-title">Few-shot examples must show reasoning</div>
+      <div class="rule-body">An example without reasoning is padding. Include <em>why</em> the answer is correct — the model learns the decision logic, not just the mapping.</div>
+    </div>
+
+    <div class="rule warn">
+      <div class="rule-title">Don't use few-shot for tool routing</div>
+      <div class="rule-body">Few-shot teaches <em>instances</em>, not <em>boundaries</em>. Edge cases are still guessed. Use tool descriptions instead.</div>
+    </div>
+
+    <div class="rule warn">
+      <div class="rule-title">15% false-positive on one category matters</div>
+      <div class="rule-body">Even if overall accuracy is 2%, a 15% rate on a specific category damages user trust for that category. Aggregate metrics hide minority-class failures.</div>
+    </div>
+
+    <div class="rule tip">
+      <div class="rule-title">Misleading comment criterion example</div>
+      <div class="rule-body">Flag if: the comment describes functionality that is <strong>not</strong> reflected in the actual code behavior.</div>
+    </div>
+  </div>
+
+  <!-- MODULE 13 -->
+  <div class="module" id="m13">
+    <div class="module-header">
+      <span class="module-num d3">M13</span>
+      <span class="module-title">JSON / Structured Output</span>
+      <span class="domain-tag">Domain 3</span>
+    </div>
+
+    <div class="two-col">
+      <div class="vs-box">
+        <div class="vs-title green">Schema CAN prevent</div>
+        <ul>
+          <li>Wrong type</li>
+          <li>Missing required field</li>
+          <li>Value not in enum</li>
+          <li>Pattern mismatch</li>
+        </ul>
+      </div>
+      <div class="vs-box">
+        <div class="vs-title red">Schema CANNOT prevent</div>
+        <ul>
+          <li>Hallucinated / fabricated data</li>
+          <li>Misread values</li>
+          <li>Incorrect categorization</li>
+          <li>Guessed absent data</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rule key" style="margin-top:8px;">
+      <div class="rule-title">Semantic error trap: strict enums without escape hatch</div>
+      <div class="rule-body">If a schema requires <code>enum: ["paid","unpaid","cancelled"]</code> but the document is ambiguous, Claude must guess. Add an <code>"unclear"</code> option to get honest output.</div>
+    </div>
+
+    <div class="rule info">
+      <div class="rule-title">Use tool_use for structured output with no real tool</div>
+      <div class="rule-body">Defining a fake tool forces Claude to respond with structured JSON even when no real logic exists behind it.</div>
+    </div>
+
+    <div class="rule warn">
+      <div class="rule-title">Validation-retry loop failing on same field</div>
+      <div class="rule-body">The schema is wrong — it likely needs an <code>"unclear"</code> / null escape hatch. More retries won't fix a semantic error.</div>
+    </div>
+  </div>
+
+  <!-- MODULE 14 -->
+  <div class="module" id="m14">
+    <div class="module-header">
+      <span class="module-num d3">M14</span>
+      <span class="module-title">Batch API vs. Synchronous</span>
+      <span class="domain-tag">Domain 3</span>
+    </div>
+
+    <div class="two-col">
+      <div class="vs-box">
+        <div class="vs-title purple">Synchronous</div>
+        <ul>
+          <li>User is waiting</li>
+          <li>Real-time response needed (&lt;30s)</li>
+          <li>Full cost</li>
+        </ul>
+      </div>
+      <div class="vs-box">
+        <div class="vs-title green">Batch API</div>
+        <ul>
+          <li><strong>50% cost savings</strong></li>
+          <li>Up to 24h processing window</li>
+          <li>High-volume overnight workloads</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rule key" style="margin-top:8px;">
+      <div class="rule-title">custom_id is the ONLY correlation mechanism</div>
+      <div class="rule-body">Batch results arrive out of order. <code>custom_id</code> (max 64 chars) is the join key to match results back to source documents.</div>
+    </div>
+
+    <div class="rule warn">
+      <div class="rule-title">No multi-turn tool calling in a single batch request</div>
+      <div class="rule-body">Each batch request = exactly one user turn → one assistant response. Multi-turn tool calling requires a second batch (new round-trip).</div>
+    </div>
+
+    <div class="rule tip">
+      <div class="rule-title">Use case examples</div>
+      <div class="rule-body"><strong>Sync:</strong> support ticket reply expected in 30s &nbsp; <strong>Batch:</strong> 10,000 contracts overnight for legal review</div>
+    </div>
+  </div>
+
+  <!-- MODULE 15 -->
+  <div class="module" id="m15">
+    <div class="module-header">
+      <span class="module-num d5">M15</span>
+      <span class="module-title">Context Preservation</span>
+      <span class="domain-tag">Domain 5</span>
+    </div>
+
+    <div class="rule warn">
+      <div class="rule-title">Progressive summarization trap</div>
+      <div class="rule-body">Each turn summarizes history → summaries lose numbers, dates, amounts, exact policy wording. Dangerous in support, legal, and financial contexts.</div>
+    </div>
+
+    <div class="rule key">
+      <div class="rule-title">Case facts block pattern</div>
+      <div class="rule-body">Keep a persistent structured dict of critical facts. Inject it <strong>verbatim</strong> into every prompt — never summarize it. Only update when agent explicitly writes to the block.</div>
+    </div>
+
+    <div class="rule info">
+      <div class="rule-title">"Lost in the middle" effect</div>
+      <div class="rule-body">Models attend reliably to the <strong>start</strong> and <strong>end</strong> of context. Middle content (e.g. pages 20–35 of a long doc) is under-attended. Fix: put critical facts at the TOP, close with a key summary, use explicit section headers.</div>
+    </div>
+
+    <div class="rule tip">
+      <div class="rule-title">Trim tool outputs</div>
+      <div class="rule-body">Raw API/DB responses pad the middle. Extract only the fields actually needed before injecting into context. Fewer tokens in the middle = less competition for attention.</div>
+    </div>
+  </div>
+
+  <!-- MODULE 16 -->
+  <div class="module" id="m16">
+    <div class="module-header">
+      <span class="module-num d5">M16</span>
+      <span class="module-title">Escalation &amp; Human-in-the-Loop</span>
+      <span class="domain-tag">Domain 5</span>
+    </div>
+
+    <div class="two-col">
+      <div class="vs-box">
+        <div class="vs-title green">Valid escalation triggers</div>
+        <ul>
+          <li><strong>Explicit request:</strong> "I want a human" → always escalate</li>
+          <li><strong>Policy gap:</strong> no policy covers the case → never invent rules</li>
+          <li><strong>No progress:</strong> repeated failed attempts → escalate after N retries</li>
+        </ul>
+      </div>
+      <div class="vs-box">
+        <div class="vs-title red">Invalid escalation triggers</div>
+        <ul>
+          <li><strong>Sentiment alone:</strong> frustrated + easy issue → resolve with empathy</li>
+          <li><strong>Self-reported confidence:</strong> "90% confident" is unreliable on hard cases</li>
+          <li><strong>Emotion keywords:</strong> "angry" ≠ escalation needed</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rule key" style="margin-top:8px;">
+      <div class="rule-title">Sentiment is a signal, NOT a trigger</div>
+      <div class="rule-body">Frustrated customer + straightforward, policy-covered issue → resolve with empathy. Escalating wastes human capacity.</div>
+    </div>
+
+    <div class="rule warn">
+      <div class="rule-title">Confidence scores are unreliable</div>
+      <div class="rule-body">Models report high confidence while being wrong on hard cases (adversarial inputs, edge cases, out-of-distribution data). Never use confidence scores alone as a routing trigger.</div>
+    </div>
+
+    <div class="rule info">
+      <div class="rule-title">Aggregate vs. stratified accuracy</div>
+      <div class="rule-body">97% overall accuracy can hide 40% error rate on one document type. Always check stratified accuracy by subgroup — aggregate metrics hide minority-class failures.</div>
+    </div>
+  </div>
+
+  <!-- MODULE 17 -->
+  <div class="module" id="m17">
+    <div class="module-header">
+      <span class="module-num d5">M17</span>
+      <span class="module-title">Error Propagation in Multi-Agent Systems</span>
+      <span class="domain-tag">Domain 5</span>
+    </div>
+
+    <div class="rule key">
+      <div class="rule-title">Structured error context from failing subagent</div>
+      <div class="rule-body">
+        <code>failure_type</code>: transient | validation | business | permission<br>
+        <code>what_was_attempted</code>: specific operation that failed<br>
+        <code>partial_results</code>: data successfully retrieved before failure<br>
+        <code>alternatives</code>: suggested next steps / fallback paths
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:6px;">
+      <div class="vs-box">
+        <div class="vs-title red">Silent Suppression</div>
+        <ul><li>Coordinator hides failure, returns "success"</li><li>Downstream agents decide on incomplete data without knowing it</li><li>Impossible to debug</li></ul>
+      </div>
+      <div class="vs-box">
+        <div class="vs-title red">Hard Termination</div>
+        <ul><li>One failure aborts entire workflow</li><li>Partial results from successful subagents discarded</li><li>User gets nothing when they could get partial value</li></ul>
+      </div>
+    </div>
+
+    <div class="rule tip" style="margin-top:6px;">
+      <div class="rule-title">Access failure vs. valid empty result</div>
+      <div class="rule-body">
+        <strong>Access failure:</strong> tool/API couldn't be reached → structured error, trigger recovery<br>
+        <strong>Valid empty:</strong> tool ran fine, found nothing → success=true, empty data, informative message<br>
+        Confusing these wastes tokens (retrying valid empties) or hides real data loss (swallowing access failures).
+      </div>
+    </div>
+
+    <div class="rule info">
+      <div class="rule-title">Graceful degradation output</div>
+      <div class="rule-body">Return partial results from succeeded subagents + clearly attribute which subagent failed, why, and what was attempted + suggest alternatives.</div>
+    </div>
+  </div>
+
+  <!-- BONUS: Key architecture patterns -->
+  <div class="module" id="bonus" style="grid-column: span 3; border-top: 2px solid var(--accent);">
+    <div class="module-header">
+      <span class="module-num d1" style="background: linear-gradient(135deg, #7c6af7, #56cfb2); color: #fff;">★</span>
+      <span class="module-title">Key Architecture Patterns &amp; Exam Traps</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+
+      <div class="rule key">
+        <div class="rule-title">Control flow via tool_use</div>
+        <div class="rule-body">Never parse natural language for control flow (<code>if "Research complete:" in response</code>). Define a <code>research_complete()</code> tool instead — gives deterministic <code>stop_reason: tool_use</code>.</div>
+      </div>
+
+      <div class="rule warn">
+        <div class="rule-title">In-context vs. external state</div>
+        <div class="rule-body"><strong>In-context:</strong> the <code>messages</code> list — valid only for the session. <strong>External:</strong> DB / files — persists across sessions. Must explicitly save to persist.</div>
+      </div>
+
+      <div class="rule info">
+        <div class="rule-title">3 separate MCPs &gt; 1 orchestrator</div>
+        <div class="rule-body">For Postgres + Jira + CRM: 3 separate MCP servers. Better tool discovery, availability, and isolation per system.</div>
+      </div>
+
+      <div class="rule tip">
+        <div class="rule-title">Attention dilution checklist</div>
+        <div class="rule-body">
+          Long doc → two-pass approach<br>
+          Many tools (&gt;10) → review descriptions<br>
+          Long context → critical facts at TOP<br>
+          Verbose tool output → trim before inject
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
